@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum JenisKelamin {
+  LAKI_LAKI @map("laki-laki")
+  PEREMPUAN @map("perempuan")
+}
+
+enum Agama {
+  ISLAM   @map("Islam")
+  KRISTEN @map("Kristen")
+  HINDU   @map("Hindu")
+}
+
+enum TingkatKeahlian {
+  ONE   @map("1")
+  TWO   @map("2")
+  THREE @map("3")
+  FOUR  @map("4")
+  FIVE  @map("5")
+  SIX   @map("6")
+}
+
+model Mahasiswa {
+  id_mahasiswa  Int          @id @default(autoincrement())
+  nrp           String
+  nama_depan    String
+  nama_belakang String
+  jenis_kelamin JenisKelamin
+  agama         Agama
+  umur          Int
+  tinggi_badan  String
+  gol_darah     String
+  alamat        String
+  hobi          String
+  email         String
+  no_telpon     String
+  keahlian      Keahlian[]
+  pendidikan    Pendidikan[]
+}
+
+model Keahlian {
+  id_keahlian           Int             @id @default(autoincrement())
+  tingkat_keahlian      TingkatKeahlian
+  Mahasiswa             Mahasiswa?      @relation(fields: [mahasiswaId_mahasiswa], references: [id_mahasiswa])
+  mahasiswaId_mahasiswa Int?
+}
+
+model Pendidikan {
+  id_pendidikan         Int        @id @default(autoincrement())
+  nama_instansi         String
+  jurusan               String
+  tahun_masuk           Int
+  tahun_lulus           Int
+  nomor_ijazah          String
+  Mahasiswa             Mahasiswa? @relation(fields: [mahasiswaId_mahasiswa], references: [id_mahasiswa])
+  mahasiswaId_mahasiswa Int?
+}
