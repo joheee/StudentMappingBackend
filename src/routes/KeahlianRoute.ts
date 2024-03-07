@@ -1,6 +1,4 @@
 import express, { Router } from 'express';
-import { MahasiswaController } from '../controller/MahasiswaController';
-import { MahasiswaValidation } from '../validation/MahasiswaValidation';
 import { KeahlianController } from '../controller/KeahlianController';
 import { KeahlianValidation } from '../validation/KeahlianValidation';
 
